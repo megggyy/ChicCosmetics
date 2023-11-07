@@ -37,7 +37,7 @@ body {
   background-color: #944f59;
   padding: 10px;
   /* Add more styles as needed */
-}
+} 
 
 #search_btn {
   background-color: #ebafbe;
@@ -476,16 +476,16 @@ footer {
 
 /* Pagination */
 .page-item.active .page-link {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #bc6471;
+  border-color: #944f59;
 }
 
 .page-link {
-  color: #fa9c23;
+  color: #944f59;
 }
 
 .page-link:hover {
-  color: #fa9c23;
+  color: #b6717b;
 }
 
 /* Admin Sidebar */

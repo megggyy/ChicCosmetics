@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Categories() {
   return (
-    <div classNameName="container-fluid">
+    <div className="container-fluid">
     <div className="container-fluid pt-5">
     <div className="row px-xl-5 pb-3">
         <div className="col-lg-4 col-md-6 pb-1">

@@ -2,7 +2,7 @@
 
 function Featured() {
   return (
-    <div classNameName="container-fluid">
+    <div className="container-fluid">
     <div className="container-fluid pt-5">
     <div className="row px-xl-5 pb-3">
         <div className="col-lg-3 col-md-6 col-sm-12 pb-1">
