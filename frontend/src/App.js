@@ -96,6 +96,8 @@ function App() {
     })
     localStorage.setItem('shippingInfo', JSON.stringify(data))
   }
+
+  //Template
   function RenderRoutes() {
     const location = useLocation();
   
