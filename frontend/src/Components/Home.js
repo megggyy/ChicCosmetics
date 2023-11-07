@@ -104,17 +104,24 @@ const Home = () => {
                                                     Categories
                                                 </h4>
                                                 <ul className="pl-0">
-                                                    {categories.map(category => (
-                                                        <li
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                                listStyleType: 'none'
-                                                            }}
-                                                            key={category}
-                                                            onClick={() => setCategory(category)}
-                                                        >
-                                                            {category}
-                                                        </li>
+                                                {categories.map(category => (
+    <li
+        style={{
+            cursor: 'pointer',
+            listStyleType: 'none',
+            textAlign: 'left',
+            padding: '5px 0', // Add this line to create space between checkbox and text
+            color: 'black'
+        }}
+        key={category}
+        onClick={() => setCategory(category)}
+    >
+        <input
+            type="checkbox"
+            style={{ cursor: 'pointer', color: 'black', display: 'inline-block', marginRight: '5px' }} // Add this line to set the checkbox color to black and align to the left with a small space
+        />
+        {category}
+    </li>
                                                     ))}
                                                 </ul>
                                             </div>
