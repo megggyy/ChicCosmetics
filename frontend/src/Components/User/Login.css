@@ -1,0 +1,41 @@
+Login.css
+
+body {
+    background-color: #ffffff;
+  }
+  
+  .login-form {
+    background-color: #f6d2d2;
+    padding: 20px; 
+  }
+  
+  .form-group label {
+    color: #574444;
+  }
+  
+  .form-group input {
+    background-color: #ffffff;
+  }
+  
+  #login_button {
+    background-color: #cf96a3;
+    border-color: #5f4444;
+  }
+  
+  #login_button:hover {
+    background-color: #8d5b64;
+    border-color: #ffffff;
+  }
+  
+  .float-right{
+    color: #d46a80;
+  }
+  
+  .mb-3 {
+    color: #8e5858;
+  }
+
+  .mb-4 {
+    color: #ffffff;
+  }
+  
