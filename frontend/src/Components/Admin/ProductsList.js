@@ -127,8 +127,8 @@ const ProductsList = () => {
                 price: `$${product.price}`,
                 stock: product.stock,
                 actions: <Fragment>
-                    <Link to={`/admin/product/${product._id}`} className="btn btn-primary py-1 px-2">
-                        <i className="fa fa-pencil"></i>
+                    <Link to={`/admin/product/${product._id}`} className="btn btn-primary py-1 px-2 ml-2">
+                        <i className="fa fa-edit"></i>
                     </Link>
                     <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteProductHandler(product._id)}>
                         <i className="fa fa-trash"></i>
