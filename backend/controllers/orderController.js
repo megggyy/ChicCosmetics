@@ -43,7 +43,7 @@ exports.newOrder = async (req, res, next) => {
             await sendEmail({
                 email: user.email,
                 subject: 'Order Confirmation',
-                message: 'Thank you for placing your order!'  
+                message: 'Thank you for placing your order in Chic Cosmetics!'  
             });
             console.log('Order confirmation email sent');
         } catch (error) { 
