@@ -46,7 +46,7 @@ exports.newOrder = async (req, res, next) => {
                 message: 'Thank you for placing your order!'  
             });
             console.log('Order confirmation email sent');
-        } catch (error) {
+        } catch (error) { 
             console.error('Error sending order confirmation email:', error.message);
         }
 
