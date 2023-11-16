@@ -51,7 +51,7 @@ exports.newOrder = async (req, res, next) => {
         }
 
         res.status(200).json({
-            success: true, 
+            success: true,
             order
         });
     } catch (error) {
@@ -60,7 +60,7 @@ exports.newOrder = async (req, res, next) => {
             message: 'Error creating the order',
             error: error.message
         });
-    } 
+    }
 };
 
 exports.getSingleOrder = async (req, res, next) => {

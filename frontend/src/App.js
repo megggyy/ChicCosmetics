@@ -18,6 +18,8 @@ import Payment from "./Components/Cart/Payment";
 import OrderSuccess from "./Components/Cart/OrderSuccess";
 import ListOrders from "./Components/Order/ListOrders";
 import OrderDetails from "./Components/Order/OrderDetails";
+import UsersList from "./Components/Admin/UsersList";
+import UpdateUser from "./Components/Admin/UpdateUser.js";
 import Dashboard from "./Components/Admin/Dashboard";
 import ProductsList from "./Components/Admin/ProductsList";
 import NewProduct from "./Components/Admin/NewProduct";
@@ -147,6 +149,11 @@ function App() {
             <Route path="/admin/products" element={<ProductsList />}  />
             <Route path="/admin/product" element={<NewProduct  />}  />
             <Route path="/admin/product/:id" element={<UpdateProduct />} />
+            <Route
+            path="/admin/users"
+            element={<UsersList />} />
+          <Route path="/admin/user/:id" element={<UpdateUser />} />
+
         </Routes>
       </Router>
       <Footer />
