@@ -1,39 +1,67 @@
 const Order = require('../models/order');
 const Product = require('../models/product');
+const User = require('../models/user');
+const sendEmail = require('../utils/sendEmail');
 
 exports.newOrder = async (req, res, next) => {
-    const {
-        orderItems,
-        shippingInfo,
-        itemsPrice,
-        taxPrice,
-        shippingPrice,
-        totalPrice,
-        paymentInfo
+    try {
+        // Fetch the user details using the User model
+        const user = await User.findById(req.user._id);
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
-    } = req.body;
+        const {
+            orderItems,
+            shippingInfo,
+            itemsPrice,
+            taxPrice,
+            shippingPrice,
+            totalPrice,
+            paymentInfo
+        } = req.body;
 
-    const order = await Order.create({
-        orderItems,
-        shippingInfo,
-        itemsPrice,
-        taxPrice,
-        shippingPrice,
-        totalPrice,
-        paymentInfo,
-        paidAt: Date.now(),
-        user: req.user._id
-    })
+        const order = await Order.create({
+            orderItems,
+            shippingInfo,
+            itemsPrice,
+            taxPrice,
+            shippingPrice,
+            totalPrice,
+            paymentInfo,
+            paidAt: Date.now(),
+            user: req.user._id
+        });
 
-    if (!order) {
-        return res.status(400).json({ message: `Order not saved` })
+        if (!order) {
+            return res.status(400).json({ message: 'Order not saved' });
+        }
+
+        // Send order confirmation email
+        try {
+            await sendEmail({
+                email: user.email,
+                subject: 'Order Confirmation',
+                message: 'Thank you for your order!'  
+            });
+            console.log('Order confirmation email sent');
+        } catch (error) {
+            console.error('Error sending order confirmation email:', error.message);
+        }
+
+        res.status(200).json({
+            success: true,
+            order
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error creating the order',
+            error: error.message
+        });
     }
-
-    res.status(200).json({
-        success: true,
-        order
-    })
-}
+};
 
 exports.getSingleOrder = async (req, res, next) => {
     const order = await Order.findById(req.params.id).populate('user', 'name email')
