@@ -43,7 +43,7 @@ exports.newOrder = async (req, res, next) => {
             await sendEmail({
                 email: user.email,
                 subject: 'Order Confirmation',
-                message: 'Thank you for your order!'  
+                message: 'Thank you for placing your order!'  
             });
             console.log('Order confirmation email sent');
         } catch (error) {
@@ -59,7 +59,7 @@ exports.newOrder = async (req, res, next) => {
             success: false,
             message: 'Error creating the order',
             error: error.message
-        });
+        }); 
     }
 };
 
