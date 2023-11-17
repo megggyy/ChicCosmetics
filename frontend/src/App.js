@@ -34,6 +34,10 @@ import Categories from "./Components/Layout/Categories";
 import Offer from "./Components/Layout/Offer";
 import ProductSection from "./Components/Product/ProductSection";
 
+import NewBrand from "./Components/Admin/NewBrand.js";
+import BrandsList from "./Components/Admin/BrandsList.js";
+import UpdateBrand from "./Components/Admin/UpdateBrand.js";
+
 function App() {
   const [state, setState] = useState({
     cartItems: localStorage.getItem('cartItems')
@@ -148,6 +152,9 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />}  />
             <Route path="/admin/products" element={<ProductsList />}  />
             <Route path="/admin/product" element={<NewProduct  />}  />
+            <Route path="/admin/brand" element={<NewBrand />} />
+            <Route path="/admin/brands" element={<BrandsList />}  />
+            <Route path="/admin/brand/:id" element={<UpdateBrand />} />
             <Route path="/admin/product/:id" element={<UpdateProduct />} />
             <Route
             path="/admin/users"
