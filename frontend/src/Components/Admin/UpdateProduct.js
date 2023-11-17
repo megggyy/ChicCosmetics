@@ -25,6 +25,9 @@ const UpdateProduct = () => {
     const [updateError, setUpdateError] = useState('')
     const [isUpdated, setIsUpdated] = useState(false)
 
+    const [brand, setBrand] = useState(''); // New state for brand
+    const [brands, setBrands] = useState([]); // State to store brands
+
     const categories = [
         'Electronics',
         'Cameras',
@@ -78,7 +81,26 @@ const UpdateProduct = () => {
             
         }
     }
+
+    const getAdminBrands = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${getToken()}`,
+                },
+            };
+
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/brands`, config);
+            setBrands(data.brands);
+            setLoading(false);
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    }
+
     useEffect(() => {
+        getAdminBrands();
         if (product && product._id !== id) {
             getProductDetails(id)
         } else {
@@ -113,7 +135,8 @@ const UpdateProduct = () => {
         formData.set('description', description);
         formData.set('category', category);
         formData.set('stock', stock);
-        formData.set('seller', seller);
+        // formData.set('seller', seller);
+        formData.set('brand', brand); // Include brand in the form data
         images.forEach(image => {
             formData.append('images', image)
         })
@@ -189,7 +212,7 @@ const UpdateProduct = () => {
                                         onChange={(e) => setStock(e.target.value)}
                                     />
                                 </div>
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <label htmlFor="seller_field">Seller Name</label>
                                     <input
                                         type="text"
@@ -198,6 +221,24 @@ const UpdateProduct = () => {
                                         value={seller}
                                         onChange={(e) => setSeller(e.target.value)}
                                     />
+                                </div> */}
+                                <div className="form-group">
+                                    <label htmlFor="brand_field">Brand</label>
+                                    <select
+                                        className="form-control"
+                                        id="brand_field"
+                                        value={brand}
+                                        onChange={(e) => setBrand(e.target.value)}
+                                    >
+                                        <option value="" disabled>
+                                            Select a brand
+                                        </option>
+                                        {brands.map((brand) => (
+                                            <option key={brand._id} value={brand._id}>
+                                                {brand.name}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className='form-group'>
                                     <label>Images</label>

@@ -2,6 +2,7 @@ const Product = require('../models/product')
 const Order = require('../models/order')
 const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary')
+const Brand = require('../models/brand')
 // exports.newProduct = async (req, res, next) => {
 
 // 	// req.body.user = req.user.id;
@@ -90,7 +91,7 @@ exports.deleteProduct = async (req, res, next) => {
 }
 
 exports.getAdminProducts = async (req, res, next) => {
-	const products = await Product.find();
+	const products = await Product.find().populate('brand');
 	if (!products) {
 		return res.status(404).json({
 			success: false,
@@ -105,7 +106,6 @@ exports.getAdminProducts = async (req, res, next) => {
 }
 
 exports.newProduct = async (req, res, next) => {
-
 	let images = []
 	if (typeof req.body.images === 'string') {
 		images.push(req.body.images)
@@ -139,6 +139,19 @@ exports.newProduct = async (req, res, next) => {
 	req.body.images = imagesLinks
 	req.body.user = req.user.id;
 
+	const brandId = req.body.brand; // Assuming you are sending the brand ID in the request body
+
+	// Check if the brand ID is valid
+	const brand = await Brand.findById(brandId);
+	if (!brand) {
+		return res.status(400).json({
+			success: false,
+			message: 'Invalid brand ID',
+		});
+	}
+
+	// Include brand information in the product creation
+	req.body.brand = brandId;
 	const product = await Product.create(req.body);
 	if (!product)
 		return res.status(400).json({
