@@ -3,6 +3,7 @@ const Order = require('../models/order')
 const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary')
 const Brand = require('../models/brand')
+const Category = require('../models/category') //category
 // exports.newProduct = async (req, res, next) => {
 
 // 	// req.body.user = req.user.id;
@@ -162,6 +163,17 @@ exports.newProduct = async (req, res, next) => {
 		success: true,
 		product
 	})
+
+	const categoryID = req.body.category;
+	const category = await Category.findById(categoryID);
+	if (!category) {
+		return res.status(400).json({
+			success: false,
+			message: 'Invalid Category ID',
+		});
+	}
+
+	req.body.category = categoryID;
 }
 
 exports.updateProduct = async (req, res, next) => {
