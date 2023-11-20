@@ -93,6 +93,11 @@ const BrandsList = () => {
                     sort: 'asc'
                 },
                 {
+                    label: 'Images',
+                    field: 'images',
+                    sort: 'asc',
+                },
+                {
                     label: 'Actions',
                     field: 'actions',
                 },
@@ -101,9 +106,13 @@ const BrandsList = () => {
         };
 
         brands.forEach(brand => {
+            const images = brand.images.map((image) => (
+                <img key={image._id} src={image.url} alt="Category Image" className="mr-2" width="50" height="50" />
+              ));
             data.rows.push({
                 id: brand._id,
                 name: brand.name,
+                images: <div>{images}</div>,
                 actions: 
                     <Fragment>
                         <Link to={`/admin/brand/${brand._id}`} className="btn btn-primary py-1 px-2 ml-2">
