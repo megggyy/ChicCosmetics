@@ -1,3 +1,4 @@
+//category controller
 const Category = require('../models/category');
 const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary');
