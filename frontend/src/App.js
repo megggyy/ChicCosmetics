@@ -31,6 +31,9 @@ import { Navbar } from "react-bootstrap";
 import Topbar from "./Components/Layout/Topbar";
 import Featured from "./Components/Layout/Featured";
 import Categories from "./Components/Layout/Categories";
+import ProductReviews from "./Components/Admin/ProductReviews";
+import Swal from 'sweetalert2';
+import ProtectedRoute from "./Components/Route/ProtectedRoute";
 import Offer from "./Components/Layout/Offer";
 import ProductSection from "./Components/Product/ProductSection";
 
@@ -153,6 +156,15 @@ function App() {
             path="/admin/users"
             element={<UsersList />} />
           <Route path="/admin/user/:id" element={<UpdateUser />} />
+
+          <Route
+            path="/admin/reviews"
+            element={
+              <ProtectedRoute isAdmin={true} >
+                <ProductReviews />
+              </ProtectedRoute>} />
+
+         
 
         </Routes>
       </Router>
