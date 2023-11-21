@@ -34,35 +34,18 @@ const productSchema = new mongoose.Schema({
         }
     ],
     category: {
-        type: String,
-        required: [true, 'Please select category for this product'],
-        enum: {
-            values: [
-                'Foundation',
-                'Concealer',
-                'Powder',
-                'Blush',
-                'Bronzer',
-                'Highlighter',
-                'Eyeshadow',
-                'Eyeliner',
-                'Mascara',
-                'Eyebrow',
-                'False Eyelashes',
-                'Lipstick',
-                'Lip Gloss',
-                'Lip Liner',
-                'Lip Balm',
-                'Primer',
-                'Setting Spray',
-                'Makeup Remover',
-            ],
-            message: 'Please select correct category for product'
-        }
+        type: mongoose.Schema.ObjectId,
+        ref: 'Category',
+        required: [true, 'Please select a category for this product']
     },
-    seller: {
-        type: String,
-        required: [true, 'Please enter product seller']
+    // seller: {
+    //     type: String,
+    //     required: [true, 'Please enter product seller']
+    // },
+    brand: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Brand',
+        required: [true, 'Please select a brand for this product']
     },
     stock: {
         type: Number,

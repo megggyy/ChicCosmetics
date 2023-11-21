@@ -12,7 +12,6 @@ const NewProduct = () => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState('');
-    const [category, setCategory] = useState('');
     const [stock, setStock] = useState(0);
     const [seller, setSeller] = useState('');
     const [images, setImages] = useState([]);
@@ -22,20 +21,11 @@ const NewProduct = () => {
     const [success, setSuccess] = useState('')
     const [product, setProduct] = useState({})
 
-    const categories = [
-        'Electronics',
-        'Cameras',
-        'Laptops',
-        'Accessories',
-        'Headphones',
-        'Food',
-        "Books",
-        'Clothes/Shoes',
-        'Beauty/Health',
-        'Sports',
-        'Outdoor',
-        'Home'
-    ]
+    const [brand, setBrand] = useState(''); // New state for brand
+    const [brands, setBrands] = useState([]); // State to store brands
+
+    const [category, setCategory] = useState('');
+    const [ categories, setCategories] = useState([]);
 
     let navigate = useNavigate()
     
@@ -46,9 +36,11 @@ const NewProduct = () => {
         formData.set('name', name);
         formData.set('price', price);
         formData.set('description', description);
-        formData.set('category', category);
         formData.set('stock', stock);
-        formData.set('seller', seller);
+        // formData.set('seller', seller);
+        formData.set('brand', brand); // Include brand in the form data
+
+        formData.set('category', category);
 
         images.forEach(image => {
             formData.append('images', image)
@@ -94,8 +86,44 @@ const NewProduct = () => {
 
         }
     }
-    useEffect(() => {
+    const getAdminBrands = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            };
 
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/brands`, config);
+            console.log(data);
+            setBrands(data.brands);
+            setLoading(false);
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    }
+
+    const getAdminCategories = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            };
+
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/categories`, config);
+            console.log(data);
+            setCategories(data.categories);
+            setLoading(false);
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    }
+    useEffect(() => {
+        getAdminBrands();
+        getAdminCategories();
         if (error) {
             toast.error(error, {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -155,15 +183,6 @@ const NewProduct = () => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="category_field">Category</label>
-                                    <select className="form-control" id="category_field" value={category} onChange={(e) => setCategory(e.target.value)}>
-                                        {categories.map(category => (
-                                            <option key={category} value={category} >{category}</option>
-                                        ))}
-
-                                    </select>
-                                </div>
-                                <div className="form-group">
                                     <label htmlFor="stock_field">Stock</label>
                                     <input
                                         type="number"
@@ -174,7 +193,7 @@ const NewProduct = () => {
                                     />
                                 </div>
 
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <label htmlFor="seller_field">Seller Name</label>
                                     <input
                                         type="text"
@@ -183,6 +202,34 @@ const NewProduct = () => {
                                         value={seller}
                                         onChange={(e) => setSeller(e.target.value)}
                                     />
+                                </div> */}
+
+                                <div className="form-group">
+                                    <label htmlFor="brand_field">Brand</label>
+                                    <select className="form-control" id="brand_field" value={brand} onChange={(e) => setBrand(e.target.value)}>
+                                        <option value="" disabled>
+                                            Select a brand
+                                        </option>
+                                        {brands.map((brand) => (
+                                            <option key={brand._id} value={brand._id}>
+                                                {brand.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="category_field">Category</label>
+                                    <select className="form-control" id="category_field" value={category} onChange={(e) => setCategory(e.target.value)}>
+                                        <option value="" disabled>
+                                            Select a category
+                                        </option>
+                                        {categories.map((category) => (
+                                            <option key={category._id} value={category._id}>
+                                                {category.name}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
 
                                 <div className='form-group'>

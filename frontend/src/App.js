@@ -17,6 +17,7 @@ import ConfirmOrder from "./Components/Cart/ConfirmOrder";
 import Payment from "./Components/Cart/Payment";
 import OrderSuccess from "./Components/Cart/OrderSuccess";
 import ListOrders from "./Components/Order/ListOrders";
+
 import OrderDetails from "./Components/Order/OrderDetails";
 import UsersList from "./Components/Admin/UsersList";
 import UpdateUser from "./Components/Admin/UpdateUser.js";
@@ -28,6 +29,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { Navbar } from "react-bootstrap";
+
 import Topbar from "./Components/Layout/Topbar";
 import Featured from "./Components/Layout/Featured";
 import Categories from "./Components/Layout/Categories";
@@ -36,6 +38,17 @@ import Swal from 'sweetalert2';
 import ProtectedRoute from "./Components/Route/ProtectedRoute";
 import Offer from "./Components/Layout/Offer";
 import ProductSection from "./Components/Product/ProductSection";
+
+import NewBrand from "./Components/Admin/NewBrand.js";
+import BrandsList from "./Components/Admin/BrandsList.js";
+import UpdateBrand from "./Components/Admin/UpdateBrand.js";
+
+import NewCategory from "./Components/Admin/NewCategory.js";
+import CategoriesList from "./Components/Admin/CategoriesList.js";
+import UpdateCategory from "./Components/Admin/UpdateCategory.js";
+
+import OrdersList from "./Components/Admin/OrdersList";
+import ProcessOrder from "./Components/Admin/ProcessOrder"
 
 function App() {
   const [state, setState] = useState({
@@ -151,11 +164,18 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />}  />
             <Route path="/admin/products" element={<ProductsList />}  />
             <Route path="/admin/product" element={<NewProduct  />}  />
+            <Route path="/admin/brand" element={<NewBrand />} />
+            <Route path="/admin/brands" element={<BrandsList />}  />
+            <Route path="/admin/brand/:id" element={<UpdateBrand />} />
+            <Route path="/admin/category" element={<NewCategory />} />
+            <Route path="/admin/categories" element={<CategoriesList />}  />
+            <Route path="/admin/category/:id" element={<UpdateCategory />} />
             <Route path="/admin/product/:id" element={<UpdateProduct />} />
-            <Route
-            path="/admin/users"
-            element={<UsersList />} />
+            <Route path="/admin/users" element={<UsersList />} />
+             <Route path="/admin/orders" element={<OrdersList />}/>
+            <Route path="/admin/order/:id"element={<ProcessOrder />} />
           <Route path="/admin/user/:id" element={<UpdateUser />} />
+          
 
           <Route
             path="/admin/reviews"
