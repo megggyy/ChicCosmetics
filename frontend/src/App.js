@@ -33,6 +33,9 @@ import { Navbar } from "react-bootstrap";
 import Topbar from "./Components/Layout/Topbar";
 import Featured from "./Components/Layout/Featured";
 import Categories from "./Components/Layout/Categories";
+import ProductReviews from "./Components/Admin/ProductReviews";
+import Swal from 'sweetalert2';
+import ProtectedRoute from "./Components/Route/ProtectedRoute";
 import Offer from "./Components/Layout/Offer";
 import ProductSection from "./Components/Product/ProductSection";
 
@@ -45,6 +48,7 @@ import CategoriesList from "./Components/Admin/CategoriesList.js";
 import UpdateCategory from "./Components/Admin/UpdateCategory.js";
 
 import OrdersList from "./Components/Admin/OrdersList";
+import ProcessOrder from "./Components/Admin/ProcessOrder"
 
 function App() {
   const [state, setState] = useState({
@@ -167,15 +171,20 @@ function App() {
             <Route path="/admin/categories" element={<CategoriesList />}  />
             <Route path="/admin/category/:id" element={<UpdateCategory />} />
             <Route path="/admin/product/:id" element={<UpdateProduct />} />
-            <Route
-            path="/admin/users"
-            element={<UsersList />} />
-             <Route
-            path="/admin/orders"
-            element={<OrdersList />}
-          />
+            <Route path="/admin/users" element={<UsersList />} />
+             <Route path="/admin/orders" element={<OrdersList />}/>
+            <Route path="/admin/order/:id"element={<ProcessOrder />} />
           <Route path="/admin/user/:id" element={<UpdateUser />} />
           
+
+          <Route
+            path="/admin/reviews"
+            element={
+              <ProtectedRoute isAdmin={true} >
+                <ProductReviews />
+              </ProtectedRoute>} />
+
+         
 
         </Routes>
       </Router>
