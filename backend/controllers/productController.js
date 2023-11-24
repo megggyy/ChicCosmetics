@@ -92,20 +92,31 @@ exports.deleteProduct = async (req, res, next) => {
 }
 
 exports.getAdminProducts = async (req, res, next) => {
-	const products = await Product.find().populate('brand');
-	if (!products) {
-		return res.status(404).json({
-			success: false,
-			message: 'Products not found'
-		})
-	}
-	res.status(200).json({
-		success: true,
-		products
-	})
+    try {
+        const products = await Product.find()
+            .populate('brand')
+            .populate('category');
 
+        if (!products) {
+            return res.status(404).json({
+                success: false,
+                message: 'Products not found'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            products
+        });
+    } catch (error) {
+        // Handle any errors that occur during the database query
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Internal Server Error'
+        });
+    }
 }
-
 exports.newProduct = async (req, res, next) => {
 	let images = []
 	if (typeof req.body.images === 'string') {
