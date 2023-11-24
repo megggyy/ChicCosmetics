@@ -10,7 +10,8 @@ const { newOrder,
 		totalOrders,
 		totalSales,
 		customerSales,
-		salesPerMonth
+		salesPerMonth,
+		confirmTransaction
 	} = require('../controllers/orderController')
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 
@@ -19,6 +20,8 @@ router.get('/order/:id', isAuthenticatedUser, getSingleOrder);
 router.get('/orders/me', isAuthenticatedUser, myOrders);
 router.get('/admin/orders/', isAuthenticatedUser, authorizeRoles('admin'), allOrders);
 router.route('/admin/order/:id').put(isAuthenticatedUser, authorizeRoles('admin'), updateOrder).delete(isAuthenticatedUser, authorizeRoles('admin'), deleteOrder);
+// Example route for confirming a transaction
+router.put('/admin/order/confirm/:id', confirmTransaction);
 
 //charts
 router.get('/admin/total-orders', totalOrders);

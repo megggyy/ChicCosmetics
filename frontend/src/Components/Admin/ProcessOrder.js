@@ -16,6 +16,7 @@ const ProcessOrder = () => {
     const [error, setError] = useState('')
     const [order, setOrder] = useState({})
     const [isUpdated, setIsUpdated] = useState(false)
+    const [isConfirmed, setIsConfirmed] = useState(false)
     let navigate = useNavigate()
 
     let { id } = useParams();
@@ -63,6 +64,22 @@ const ProcessOrder = () => {
         }
     }
 
+    const confirmTransaction = async (id) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            };
+            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/admin/order/confirm/${id}`, config);
+            setIsConfirmed(data.success);
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    }
+    
+
     useEffect(() => {
         getOrderDetails(orderId)
         if (error) {
@@ -74,7 +91,13 @@ const ProcessOrder = () => {
             setIsUpdated('')
             navigate('/admin/orders')
         }
-    }, [error, isUpdated, orderId])
+        if (isConfirmed) {
+            successMsg('Transaction confirmed successfully');
+            setIsConfirmed('')
+            navigate('/admin/orders')
+        }
+       
+    }, [error, isUpdated, isConfirmed, orderId])
 
     const updateOrderHandler = (id) => {
         const formData = new FormData();
@@ -82,6 +105,11 @@ const ProcessOrder = () => {
         updateOrder(id, formData)
     }
 
+    const confirmTransactionHandler = (id) => {
+        confirmTransaction(id)
+    }
+
+  
     const shippingDetails = shippingInfo && `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`
     const isPaid = paymentInfo && paymentInfo.status === 'succeeded' ? true : false
     return (
@@ -96,7 +124,19 @@ const ProcessOrder = () => {
                         {loading ? <Loader /> : (
                             <div className="row d-flex justify-content-around">
                                 <div className="col-12 col-lg-7 order-details">
+                                    
                                     <h2 className="my-5">Order # {order._id}</h2>
+                                    {order.orderConfirmation === 'Confirmed' &&( 
+                                        <div className="order-confirmed-block">
+                                        <p>Order has already been confirmed. Thank you!</p>
+                                        </div>
+                                    )}
+                                    {order.orderConfirmation === 'NotConfirmed' &&(
+                                    
+                                    <button className="btn btn-primary btn-block" onClick={() => confirmTransactionHandler(order._id)}>
+                                        Confirm Order
+                                    </button>
+                                    )}
                                     <h4 className="mb-4">Shipping Info</h4>
                                     <p><b>Name:</b> {user && user.name}</p>
                                     <p><b>Phone:</b> {shippingInfo && shippingInfo.phoneNo}</p>
