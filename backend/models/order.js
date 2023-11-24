@@ -90,6 +90,11 @@ const orderSchema = mongoose.Schema({
         required: true,
         default: 'Processing'
     },
+    orderConfirmation: {
+        type: String,
+        required: true,
+        default: 'NotConfirmed'
+    },
     deliveredAt: {
         type: Date
     },
