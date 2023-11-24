@@ -83,6 +83,38 @@ const ProductDetails = ({cartItems, addItemToCart}) => {
         }
     }, [id, error,]);
 
+    function setUserRatings() {
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((star, index) => {
+            star.starValue = index + 1;
+            ['click', 'mouseover', 'mouseout'].forEach(function (e) {
+                star.addEventListener(e, showRatings);
+            })
+        })
+        function showRatings(e) {
+            stars.forEach((star, index) => {
+                if (e.type === 'click') {
+                    if (index < this.starValue) {
+                        star.classList.add('orange');
+                        setRating(this.starValue)
+                    } else {
+                        star.classList.remove('orange')
+                    }
+                }
+                if (e.type === 'mouseover') {
+                    if (index < this.starValue) {
+                        star.classList.add('yellow');
+                    } else {
+                        star.classList.remove('yellow')
+                    }
+                }
+                if (e.type === 'mouseout') {
+                    star.classList.remove('yellow')
+                }
+            })
+        }
+    }
+
     const newReview = async (reviewData) => {
         try {
             const config = {
@@ -183,14 +215,14 @@ const ProductDetails = ({cartItems, addItemToCart}) => {
                             <p id="product_seller mb-3">Sold by: <strong>{product.seller}</strong></p>
                             
                             {user ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" onClick={setUserRatings} >
-                                Submit Your Review
+                                Review and Rate Product
                             </button> : <div className="alert alert-danger mt-5" type='alert'>Login to post your review.</div>}
 
                           
-                            <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" >
+                            {/* <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" >
                                 Submit Your Review
-                            </button>
-                            <div className="alert alert-danger mt-5" type='alert'>Login to post your review.</div>
+                            </button> */}
+                            {/* <div className="alert alert-danger mt-5" type='alert'>Login to post your review.</div> */}
                             {/* } */}
 
 
@@ -219,6 +251,8 @@ const ProductDetails = ({cartItems, addItemToCart}) => {
                                                     <textarea
                                                         name="review"
                                                         id="review" className="form-control mt-3"
+                                                        value={comment}
+                                                        onChange={(e) => setComment(e.target.value)}
                                                     >
 
                                                     </textarea>
@@ -230,7 +264,13 @@ const ProductDetails = ({cartItems, addItemToCart}) => {
                                     </div>
 
                                 </div>
+
                             </div>
+                            {product.reviews && product.reviews.length > 0 && (
+
+                                <ListReviews reviews={product.reviews} />
+
+)}
                         </div>
                     </div>
                 </Fragment>
