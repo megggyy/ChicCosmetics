@@ -4,15 +4,7 @@ const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary')
 const Brand = require('../models/brand')
 const Category = require('../models/category') //category
-// exports.newProduct = async (req, res, next) => {
 
-// 	// req.body.user = req.user.id;
-// 	const product = await Product.create(req.body);
-// 	res.status(201).json({
-// 		success: true,
-// 		product
-// 	})
-// }
 
 exports.getProducts = async (req, res, next) => {
 	// const products = await Product.find({});
