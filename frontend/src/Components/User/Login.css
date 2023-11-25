@@ -1,41 +1,64 @@
-Login.css
+Login.css body {
+  background-color: #ffffff;
+}
 
-body {
-    background-color: #ffffff;
-  }
-  
-  .login-form {
-    background-color: #f6d2d2;
-    padding: 20px; 
-  }
-  
-  .form-group label {
-    color: #574444;
-  }
-  
-  .form-group input {
-    background-color: #ffffff;
-  }
-  
-  #login_button {
-    background-color: #cf96a3;
-    border-color: #5f4444;
-  }
-  
-  #login_button:hover {
-    background-color: #8d5b64;
-    border-color: #ffffff;
-  }
-  
-  .float-right{
-    color: #d46a80;
-  }
-  
-  .mb-3 {
-    color: #8e5858;
-  }
+.login-form {
+  background-color: #f6d2d2;
+  padding: 20px;
+}
 
-  .mb-4 {
-    color: #ffffff;
-  }
-  
+.form-group label {
+  color: #574444;
+}
+
+.form-group input {
+  background-color: #ffffff;
+}
+
+#login_button {
+  background-color: #cf96a3;
+  border-color: #5f4444;
+}
+
+#login_button:hover {
+  background-color: #8d5b64;
+  border-color: #ffffff;
+}
+
+.float-right {
+  color: #d46a80;
+}
+
+.mb-3 {
+  color: #8e5858;
+}
+
+.mb-4 {
+  color: #ffffff;
+}
+
+/* Create a class for the button */
+.google-login-button {
+  display: inline-block;
+  background-color: #cf96a3;
+  color: #ffffff;
+  width: 190px;
+  height: 50px;
+  border-radius: 5px;
+  border: thin solid #888;
+  box-shadow: 1px 1px 1px grey;
+  white-space: nowrap;
+}
+
+.google-login-button:hover {
+  background-color: #8d5b64;;
+  cursor: pointer;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.16);
+}
+.google-icon{
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  vertical-align: middle;
+  color: #ffffff;
+}

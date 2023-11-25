@@ -11,11 +11,13 @@ import 'react-toastify/dist/ReactToastify.css';
 const Header = ({ cartItems }) => {
     const [user, setUser] = useState({})
     const navigate = useNavigate()
+    
     const logoutUser = async () => {
         try {
             await axios.get(`${process.env.REACT_APP_API}/api/v1/logout`)
             setUser({})
             logout(() => navigate('/'))
+            window.location.reload();
         } catch (error) {
             toast.error(error.response.data.message)
 
@@ -23,13 +25,17 @@ const Header = ({ cartItems }) => {
     }
     const logoutHandler = () => {
         logoutUser();
-        toast.success('log out', {
+        toast.success('Logging Out', {
             position: toast.POSITION.BOTTOM_RIGHT
         });
+        window.location.reload();
+
     }
+
     useEffect(() => {
         setUser(getUser())
     }, [])
+
     return (
         <Fragment>
             <nav className="navbar row custom-nav">

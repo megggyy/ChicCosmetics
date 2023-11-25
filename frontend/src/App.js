@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from './Components/Layout/Header'
 import Footer from './Components/Layout/Footer'
 import Home from './Components/Home';
@@ -38,7 +38,7 @@ import Swal from 'sweetalert2';
 import ProtectedRoute from "./Components/Route/ProtectedRoute";
 import Offer from "./Components/Layout/Offer";
 import ProductSection from "./Components/Product/ProductSection";
-
+import { gapi } from "gapi-script";
 import NewBrand from "./Components/Admin/NewBrand.js";
 import BrandsList from "./Components/Admin/BrandsList.js";
 import UpdateBrand from "./Components/Admin/UpdateBrand.js";
@@ -51,6 +51,19 @@ import OrdersList from "./Components/Admin/OrdersList";
 import ProcessOrder from "./Components/Admin/ProcessOrder"
 
 function App() {
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId:
+          "487035883817-4qg72avlq84pfgrjjmhiigjcb832qgom.apps.googleusercontent.com",
+        scope: "",
+      });
+    }
+
+    gapi.load("client:auth2", start);
+  });
+
   const [state, setState] = useState({
     cartItems: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
