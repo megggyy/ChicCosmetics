@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Header = ({ cartItems }) => {
     const [user, setUser] = useState({})
     const navigate = useNavigate()
-    
+
     const logoutUser = async () => {
         try {
             await axios.get(`${process.env.REACT_APP_API}/api/v1/logout`)
@@ -51,7 +51,7 @@ const Header = ({ cartItems }) => {
                 </div>
 
                 <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-                    <Link to="/" style={{ textDecoration: 'none' }} >
+                    <Link to="/wishlist" style={{ textDecoration: 'none' }} >
                         <span id="cart" className="ml-3">Wishlist</span>
                         <span className="ml-1" id="">{}</span>
                         {/*<span className="ml-1" id="cart_count">2</span>*/}

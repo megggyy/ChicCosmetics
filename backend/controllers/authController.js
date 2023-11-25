@@ -3,11 +3,14 @@ const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
-const {google} = require('googleapis');
-const bcrypt = require('bcrypt')
+const { google } = require("googleapis");
+const bcrypt = require("bcrypt");
 const { OAuth2 } = google.auth;
+const Product = require("../models/product");
 
-const client = new OAuth2('487035883817-4qg72avlq84pfgrjjmhiigjcb832qgom.apps.googleusercontent.com')
+const client = new OAuth2(
+  "487035883817-4qg72avlq84pfgrjjmhiigjcb832qgom.apps.googleusercontent.com"
+);
 
 exports.registerUser = async (req, res, next) => {
   const result = await cloudinary.v2.uploader.upload(
@@ -64,7 +67,6 @@ exports.loginUser = async (req, res, next) => {
   }
 
   sendToken(user, 200, res);
-
 };
 
 exports.logout = async (req, res, next) => {
@@ -279,7 +281,7 @@ exports.createWish = async (req, res, next) => {
         .json({ error: "Product already exists in wishlist" });
     }
 
-    user.wishlist.push({ product/* : product._id, */ });
+    user.wishlist.push({ product /* : product._id, */ });
     await user.save();
 
     res
@@ -318,7 +320,10 @@ exports.getWish = async (req, res, next) => {
     const productId = req.params.id;
     const userId = req.user.id;
 
-    const user = await User.findOne({  _id: userId, "wishlist.product": productId });    
+    const user = await User.findOne({
+      _id: userId,
+      "wishlist.product": productId,
+    });
 
     if (!user) {
       return res.status(404).json({
@@ -326,7 +331,6 @@ exports.getWish = async (req, res, next) => {
         message: "User not found",
       });
     }
-
 
     const productInWishlist = user.wishlist.find(
       (item) => item.product.toString() === productId
@@ -352,6 +356,33 @@ exports.getWish = async (req, res, next) => {
     });
   }
 };
+
+exports.getUserWishlist = async (req, res, next) => {
+  try {
+    const userId = req.user._id; // Assuming user ID is available in the request
+
+    const user = await User.findById(userId).populate({
+      path: 'wishlist.product',
+      model: 'Product', // Assuming your product model name is 'Product'
+      select: 'name price images' // Specify fields you want to select from Product model
+    });
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    const wishlist = user.wishlist.map(item => item.product._id); // Extracting product IDs from the wishlist
+
+    // Fetch all products based on the IDs from the wishlist
+    const products = await Product.find({ _id: wishlist });
+
+    res.status(200).json({ success: true, wishlist: products });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
 
 //glogin
 

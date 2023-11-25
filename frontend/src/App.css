@@ -622,3 +622,28 @@ ul.CTAs a {
   font-size: 0.8rem;
   color: grey;
 }
+
+.wishlist-button {
+  background: none;
+  cursor: pointer;
+  outline: none !important;
+  border: none;
+}
+
+.wishlist-button svg {
+  width: 30px;
+  height: 24px;
+  padding-left: 2%;
+  /* color: grey; */
+  transition: color 0.3s ease;
+}
+
+.wishlist-button svg:hover {
+  /* color: #8b4656; */
+  transition: color 0.3s ease;
+}
+
+.wishlist-button svg:hover {
+  color: #8b4656;
+  transition: color 0.3s ease;
+}

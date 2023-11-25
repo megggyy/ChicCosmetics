@@ -1,11 +1,16 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import Header from './Components/Layout/Header'
-import Footer from './Components/Layout/Footer'
-import Home from './Components/Home';
+import Header from "./Components/Layout/Header";
+import Footer from "./Components/Layout/Footer";
+import Home from "./Components/Home";
 import ProductDetails from "./Components/Product/ProductDetails";
 import Login from "./Components/User/Login";
-import Register from './Components/User/Register';
+import Register from "./Components/User/Register";
 import Profile from "./Components/User/Profile";
 import UpdateProfile from "./Components/User/UpdateProfile";
 import UpdatePassword from "./Components/User/UpdatePassword";
@@ -25,7 +30,7 @@ import Dashboard from "./Components/Admin/Dashboard";
 import ProductsList from "./Components/Admin/ProductsList";
 import NewProduct from "./Components/Admin/NewProduct";
 import UpdateProduct from "./Components/Admin/UpdateProduct";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { Navbar } from "react-bootstrap";
@@ -34,7 +39,7 @@ import Topbar from "./Components/Layout/Topbar";
 import Featured from "./Components/Layout/Featured";
 import Categories from "./Components/Layout/Categories";
 import ProductReviews from "./Components/Admin/ProductReviews";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import ProtectedRoute from "./Components/Route/ProtectedRoute";
 import Offer from "./Components/Layout/Offer";
 import ProductSection from "./Components/Product/ProductSection";
@@ -48,10 +53,11 @@ import CategoriesList from "./Components/Admin/CategoriesList.js";
 import UpdateCategory from "./Components/Admin/UpdateCategory.js";
 
 import OrdersList from "./Components/Admin/OrdersList";
-import ProcessOrder from "./Components/Admin/ProcessOrder"
+import ProcessOrder from "./Components/Admin/ProcessOrder";
+
+import UserWishlist from "./Components/User/userWishlist.js";
 
 function App() {
-
   useEffect(() => {
     function start() {
       gapi.client.init({
@@ -65,146 +71,191 @@ function App() {
   });
 
   const [state, setState] = useState({
-    cartItems: localStorage.getItem('cartItems')
-      ? JSON.parse(localStorage.getItem('cartItems'))
+    cartItems: localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cartItems"))
       : [],
-    shippingInfo: localStorage.getItem('shippingInfo')
-      ? JSON.parse(localStorage.getItem('shippingInfo'))
+    shippingInfo: localStorage.getItem("shippingInfo")
+      ? JSON.parse(localStorage.getItem("shippingInfo"))
       : {},
-  })
+  });
 
   const addItemToCart = async (id, quantity) => {
-    console.log(id, quantity)
+    console.log(id, quantity);
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/${id}`)
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API}/api/v1/product/${id}`
+      );
       const item = {
         product: data.product._id,
         name: data.product.name,
         price: data.product.price,
         image: data.product.images[0].url,
         stock: data.product.stock,
-        quantity: quantity
-      }
+        quantity: quantity,
+      };
 
-      const isItemExist = state.cartItems.find(i => i.product === item.product)
-      console.log(isItemExist, state)
+      const isItemExist = state.cartItems.find(
+        (i) => i.product === item.product
+      );
+      console.log(isItemExist, state);
 
       if (isItemExist) {
         setState({
           ...state,
-          cartItems: state.cartItems.map(i => i.product === isItemExist.product ? item : i)
-        })
-      }
-      else {
+          cartItems: state.cartItems.map((i) =>
+            i.product === isItemExist.product ? item : i
+          ),
+        });
+      } else {
         setState({
           ...state,
-          cartItems: [...state.cartItems, item]
-        })
+          cartItems: [...state.cartItems, item],
+        });
       }
 
-      toast.success('Item Added to Cart', {
-        position: toast.POSITION.BOTTOM_RIGHT
-      })
-
+      toast.success("Item Added to Cart", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
     } catch (error) {
       toast.error(error, {
-        position: toast.POSITION.TOP_LEFT
+        position: toast.POSITION.TOP_LEFT,
       });
       // navigate('/')
     }
-
-  }
+  };
   const removeItemFromCart = async (id) => {
     setState({
       ...state,
-      cartItems: state.cartItems.filter(i => i.product !== id)
-    })
-  }
+      cartItems: state.cartItems.filter((i) => i.product !== id),
+    });
+  };
 
   const saveShippingInfo = async (data) => {
     setState({
       ...state,
-      shippingInfo: data
-    })
-    localStorage.setItem('shippingInfo', JSON.stringify(data))
-  }
+      shippingInfo: data,
+    });
+    localStorage.setItem("shippingInfo", JSON.stringify(data));
+  };
 
   //Template
   function RenderRoutes() {
     const location = useLocation();
-  
+
     return (
       <div>
-       {location.pathname === "/" && <Topbar />}
-       {location.pathname === "/" && <Featured />}
-       {location.pathname === "/" && <Categories />}
-       {location.pathname === "/" && <Offer />}
-       {location.pathname === "/" && <ProductSection />}
+        {location.pathname === "/" && <Topbar />}
+        {location.pathname === "/" && <Featured />}
+        {location.pathname === "/" && <Categories />}
+        {location.pathname === "/" && <Offer />}
+        {location.pathname === "/" && <ProductSection />}
       </div>
     );
   }
-  
 
   return (
     <div className="container-fluid">
-
       <Router>
         <Header cartItems={state.cartItems} />
         <RenderRoutes />
         <Routes>
           <Route path="/" element={<Home />} exact="true" />
-          <Route path="/product/:id" element={<ProductDetails cartItems={state.cartItems} addItemToCart={addItemToCart} />} exact="true" />
+          <Route
+            path="/product/:id"
+            element={
+              <ProductDetails
+                cartItems={state.cartItems}
+                addItemToCart={addItemToCart}
+              />
+            }
+            exact="true"
+          />
           <Route path="/search/:keyword" element={<Home />} exact="true" />
           <Route path="/login" element={<Login />} exact="true" />
           <Route path="/register" element={<Register />} exact="true" />
           <Route path="/me" element={<Profile />} exact="true" />
           <Route path="/me/update" element={<UpdateProfile />} exact="true" />
           <Route path="/password/update" element={<UpdatePassword />} />
-          <Route path="/password/forgot" element={<ForgotPassword />} exact="true" />
-          <Route path="/password/reset/:token" element={<NewPassword />} exact="true" />
-          <Route path="/cart"
-            element={<Cart
-              cartItems={state.cartItems}
-              addItemToCart={addItemToCart}
-              removeItemFromCart={removeItemFromCart}
-            />} exact="true" />
-            <Route path="/shipping" element={<Shipping shipping={state.shippingInfo} saveShippingInfo={saveShippingInfo} />} />
-            <Route path="/confirm" element={<ConfirmOrder cartItems={state.cartItems} shippingInfo={state.shippingInfo} />}  />
-            <Route path="/payment" element={<Payment cartItems={state.cartItems} shippingInfo={state.shippingInfo} />}  />
-            <Route path="/success" element={<OrderSuccess />}  />
-            <Route path="/orders/me" element={<ListOrders />}  />
-            <Route path="/order/:id" element={<OrderDetails />}  />
-            <Route path="/dashboard" element={<Dashboard />}  />
-            <Route path="/admin/products" element={<ProductsList />}  />
-            <Route path="/admin/product" element={<NewProduct  />}  />
-            <Route path="/admin/brand" element={<NewBrand />} />
-            <Route path="/admin/brands" element={<BrandsList />}  />
-            <Route path="/admin/brand/:id" element={<UpdateBrand />} />
-            <Route path="/admin/category" element={<NewCategory />} />
-            <Route path="/admin/categories" element={<CategoriesList />}  />
-            <Route path="/admin/category/:id" element={<UpdateCategory />} />
-            <Route path="/admin/product/:id" element={<UpdateProduct />} />
-            <Route path="/admin/users" element={<UsersList />} />
-             <Route path="/admin/orders" element={<OrdersList />}/>
-            <Route path="/admin/order/:id"element={<ProcessOrder />} />
+          <Route
+            path="/password/forgot"
+            element={<ForgotPassword />}
+            exact="true"
+          />
+          <Route
+            path="/password/reset/:token"
+            element={<NewPassword />}
+            exact="true"
+          />
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                cartItems={state.cartItems}
+                addItemToCart={addItemToCart}
+                removeItemFromCart={removeItemFromCart}
+              />
+            }
+            exact="true"
+          />
+          <Route
+            path="/shipping"
+            element={
+              <Shipping
+                shipping={state.shippingInfo}
+                saveShippingInfo={saveShippingInfo}
+              />
+            }
+          />
+          <Route
+            path="/confirm"
+            element={
+              <ConfirmOrder
+                cartItems={state.cartItems}
+                shippingInfo={state.shippingInfo}
+              />
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <Payment
+                cartItems={state.cartItems}
+                shippingInfo={state.shippingInfo}
+              />
+            }
+          />
+          <Route path="/success" element={<OrderSuccess />} />
+          <Route path="/orders/me" element={<ListOrders />} />
+          <Route path="/order/:id" element={<OrderDetails />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin/products" element={<ProductsList />} />
+          <Route path="/admin/product" element={<NewProduct />} />
+          <Route path="/admin/brand" element={<NewBrand />} />
+          <Route path="/admin/brands" element={<BrandsList />} />
+          <Route path="/admin/brand/:id" element={<UpdateBrand />} />
+          <Route path="/admin/category" element={<NewCategory />} />
+          <Route path="/admin/categories" element={<CategoriesList />} />
+          <Route path="/admin/category/:id" element={<UpdateCategory />} />
+          <Route path="/admin/product/:id" element={<UpdateProduct />} />
+          <Route path="/admin/users" element={<UsersList />} />
+          <Route path="/admin/orders" element={<OrdersList />} />
+          <Route path="/admin/order/:id" element={<ProcessOrder />} />
           <Route path="/admin/user/:id" element={<UpdateUser />} />
-          
 
           <Route
             path="/admin/reviews"
             element={
-              <ProtectedRoute isAdmin={true} >
+              <ProtectedRoute isAdmin={true}>
                 <ProductReviews />
-              </ProtectedRoute>} />
-
-         
-
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/wishlist" element={<UserWishlist />} />
         </Routes>
       </Router>
       <Footer />
     </div>
   );
-
 }
 
 export default App;

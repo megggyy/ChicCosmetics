@@ -1,0 +1,57 @@
+.wishlist-list {
+    padding: 20px;
+        /* display: flex;
+        flex-wrap: wrap; */
+    justify-content: center;
+    gap: 20px;
+
+}
+
+/* Style for the wishlist items */
+.wishlist-item {
+    width: calc(25% - 20px);
+    /* 4 cards per row with gap of 20px */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.wishlist-item:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Style for the wishlist item images */
+.wishlist-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.wishlist-list h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #333;
+    /* Change color as desired */
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+/* Style for the wishlist item titles */
+.wishlist-item h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+/* Style for the wishlist item prices */
+.wishlist-item p {
+    font-size: 16px;
+    margin: 0;
+}

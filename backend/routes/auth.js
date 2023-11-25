@@ -18,6 +18,7 @@ const {
   createWish,
   deleteWish,
   getWish,
+  getUserWishlist,
   gLogin,
 } = require("../controllers/authController");
 
@@ -40,7 +41,11 @@ router
   .put(isAuthenticatedUser, updateUser);
 
 // Wishlist
-router.route("/wishlist").post(isAuthenticatedUser, createWish);
+router
+  .route("/wishlist")
+  .post(isAuthenticatedUser, createWish)
+  .get(isAuthenticatedUser, getUserWishlist);
+
 router.get("/wishlistshow/:id", isAuthenticatedUser, getWish);
 router.delete("/deletewish/:id", isAuthenticatedUser, deleteWish);
 
