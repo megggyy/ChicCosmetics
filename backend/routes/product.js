@@ -8,10 +8,10 @@ const { newProduct, getProducts, getSingleProduct, updateProduct, deleteProduct,
 
 const {isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth')
 
-router.post('/admin/product/new', isAuthenticatedUser, upload.array('images', 10), newProduct)
+router.post('/admin/product/new', isAuthenticatedUser, upload, newProduct)
 router.get('/products', getProducts)
 router.get('/product/:id', getSingleProduct);
-router.route('/admin/product/:id', isAuthenticatedUser,).put(upload.array('images', 10), updateProduct).delete(deleteProduct);
+router.route('/admin/product/:id', isAuthenticatedUser,).put(upload, updateProduct).delete(deleteProduct);
 router.get('/admin/products', isAuthenticatedUser, authorizeRoles('admin'), getAdminProducts);
 
 //review

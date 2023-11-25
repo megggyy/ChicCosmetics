@@ -12,4 +12,7 @@ module.exports = multer({
         }
         cb(null, true);
     },
-});
+}).fields([
+    {name: "avatar",maxCount: 5},
+    {name: "images", maxCount: 5}
+]);
