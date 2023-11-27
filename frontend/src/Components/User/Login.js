@@ -137,14 +137,8 @@ const Login = () => {
                 >
                   LOGIN
                 </button>
-
-                <Link to="/register" className="float-right mt-3">
-                  New User?
-                </Link>
-              </form>
-            </div>
-            <div className="col-span-6">
-              <GoogleLog
+                <br></br>
+                <GoogleLog
                 clientId="487035883817-4qg72avlq84pfgrjjmhiigjcb832qgom.apps.googleusercontent.com"
                 onSuccess={resgoogle}
                 cookiePolicy={"single_host_origin"}
@@ -171,6 +165,11 @@ const Login = () => {
                   </button>
                 )}
               />
+
+                <Link to="/register" className="float-right mt-3">
+                  New User?
+                </Link>
+              </form>
             </div>
           </div>
         </Fragment>
