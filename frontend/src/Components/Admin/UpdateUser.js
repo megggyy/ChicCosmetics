@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { errMsg, successMsg } from '../../utils/helpers';
 import { getToken } from '../../utils/helpers';
 import axios from 'axios';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const UpdateUser = () => {
     const [name, setName] = useState('')
@@ -76,39 +78,67 @@ const UpdateUser = () => {
         updateUser(user._id, formData)
     }
 
+    const validationSchema = Yup.object({
+        name: Yup.string().required('Name is required'),
+        email: Yup.string().required('Email is required'),
+    
+    });
+    const formik = useFormik({
+        initialValues: {
+          name: "user.name" || "",
+          email: "user.email" || ""
+          },
+        validationSchema,
+        onSubmit: (values) => {
+          try {
+            submitHandler(values);
+            console.log("Submitting review with values:", values);
+          } catch (error) {
+            console.error("Error submitting review:", error);
+          }
+        },
+      });
+
     return (
         <Fragment>
             <MetaData title={`Update User`} />
             <div className="row">
-                <div className="col-12 col-md-2">
+            <div className="col-md-2 p-0">
                     <Sidebar />
                 </div>
                 <div className="col-12 col-md-10">
                     <div className="row wrapper">
                         <div className="col-10 col-lg-5">
-                            <form className="shadow-lg" onSubmit={submitHandler}>
+                            <form className="shadow-lg"onSubmit={submitHandler}>
                                 <h1 className="mt-2 mb-5">Update User</h1>
                                 <div className="form-group">
                                     <label htmlFor="name_field">Name</label>
                                     <input
                                         type="name"
                                         id="name_field"
-                                        className="form-control"
+                                        className={`form-control ${formik.touched.name && formik.errors.name ? 'is-invalid' : ''}`}
                                         name='name'
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                     />
+                                    {formik.touched.name && formik.errors.name && (
+                                    <div className="invalid-feedback">{formik.errors.name}</div>
+                                     )}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email_field">Email</label>
                                     <input
                                         type="email"
                                         id="email_field"
-                                        className="form-control"
+                                        className={`form-control ${formik.touched.price && formik.errors.price ? 'is-invalid' : ''}`}
                                         name='email'
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
+
                                     />
+                                    {formik.touched.email && formik.errors.email && (
+                                        <div className="invalid-feedback">{formik.errors.email}</div>
+                                        )}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="role_field">Role</label>
