@@ -29,6 +29,6 @@ router
   .get(isAuthenticatedUser, getCategoryDetails)
   .put(upload.array("images", 10), updateCategory)
   .delete(deleteCategory);
-router.get("/categories", isAuthenticatedUser, getCategories);
+router.get("/categories", getCategories);
 
 module.exports = router;

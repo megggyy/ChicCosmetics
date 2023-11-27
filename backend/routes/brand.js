@@ -29,6 +29,6 @@ router
   .get(isAuthenticatedUser, getBrandDetails)
   .put(upload.array("images", 10), updateBrand)
   .delete(deleteBrand);
-router.get("/brands", isAuthenticatedUser, getBrands);
+router.get("/brands", getBrands);
 
 module.exports = router;
