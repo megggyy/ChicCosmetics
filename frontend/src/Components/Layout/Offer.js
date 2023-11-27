@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Offer() {
   return (
@@ -9,11 +10,11 @@ function Offer() {
             <div className="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
               <img src="userkit/img/offer-1.png" alt="" />
               <div className="position-relative" style={{ zIndex: 1 }}>
-                <h5 className="text-uppercase text-primary mb-3">20% off on all orders</h5>
-                <h1 className="mb-4 font-weight-semi-bold" style={{ color: 'black' }}>Spring Collection</h1>
-                <a href="#" className="btn btn-outline-primary py-md-2 px-md-3">
-                  Shop Now
-                </a>
+                <h5 className="text-uppercase text-primary mb-3">5% off on all orders</h5>
+                <h2 className="mb-4 font-weight-semi-bold" style={{ color: 'black' }}>Spring Collection on Anna Cay</h2>
+                <Link to="/shop" className="btn btn-outline-primary py-md-2 px-md-3">
+                    Shop Now
+                </Link>
               </div>
             </div>
           </div>
@@ -21,11 +22,11 @@ function Offer() {
             <div className="position-relative bg-secondary text-center text-md-left text-white mb-2 py-5 px-5">
               <img src="userkit/img/offer-2.png" alt="" />
               <div className="position-relative" style={{ zIndex: 1 }}>
-                <h5 className="text-uppercase text-primary mb-3">20% off on all orders</h5>
-                <h1 className="mb-4 font-weight-semi-bold" style={{ color: 'black' }}>Winter Collection</h1>
-                <a href="#" className="btn btn-outline-primary py-md-2 px-md-3">
-                  Shop Now
-                </a>
+                <h5 className="text-uppercase text-primary mb-3">10% off on all orders</h5>
+                <h2 className="mb-4 font-weight-semi-bold" style={{ color: 'black' }}>Winter Collection on Anasthasia</h2>
+                <Link to="/shop" className="btn btn-outline-primary py-md-2 px-md-3">
+                    Shop Now
+                </Link>
               </div>
             </div>
           </div>
