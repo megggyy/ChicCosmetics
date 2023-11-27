@@ -37,13 +37,15 @@ import { Navbar } from "react-bootstrap";
 
 import Topbar from "./Components/Layout/Topbar";
 import Featured from "./Components/Layout/Featured";
-import Categories from "./Components/Layout/Categories";
 import ProductReviews from "./Components/Admin/ProductReviews";
 import Swal from "sweetalert2";
 import ProtectedRoute from "./Components/Route/ProtectedRoute";
 import Offer from "./Components/Layout/Offer";
 import ProductSection from "./Components/Product/ProductSection";
 import { gapi } from "gapi-script";
+
+import Brands from "./Components/Layout/Brands";
+
 import NewBrand from "./Components/Admin/NewBrand.js";
 import BrandsList from "./Components/Admin/BrandsList.js";
 import UpdateBrand from "./Components/Admin/UpdateBrand.js";
@@ -147,7 +149,7 @@ function App() {
       <div>
         {location.pathname === "/" && <Topbar />}
         {location.pathname === "/" && <Featured />}
-        {location.pathname === "/" && <Categories />}
+        {location.pathname === "/" && <Brands />}
         {location.pathname === "/" && <Offer />}
         {location.pathname === "/" && <ProductSection />}
       </div>
