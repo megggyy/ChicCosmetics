@@ -13,8 +13,9 @@ const Register = () => {
 
     const { name, email, password } = user;
 
-    const [avatar, setAvatar] = useState('')
-    const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.jpg')
+
+    const [avatar, setAvatar] = useState([]);
+    const [avatarPreview, setAvatarPreview] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(true)
@@ -39,25 +40,32 @@ const Register = () => {
         formData.set('name', name);
         formData.set('email', email);
         formData.set('password', password);
-        formData.set('avatar', avatar);
+
+        avatar.forEach(avatars => {
+          formData.append("avatar", avatars);
+        });
+        // formData.set('avatar', avatar);
 
         register(formData)
     }
 
-    const onChange = e => {
-        if (e.target.name === 'avatar') {
-            const reader = new FileReader();
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setAvatarPreview(reader.result)
-                    setAvatar(reader.result)
-                }
-            }
-            reader.readAsDataURL(e.target.files[0])
-        } else {
-            setUser({ ...user, [e.target.name]: e.target.value })
-        }
-    }
+  const onChange = e => {
+  const files = Array.from(e.target.files)
+  setAvatarPreview([]);
+  setAvatar([])
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setAvatarPreview(oldArray => [...oldArray, reader.result])
+        setAvatar(oldArray => [...oldArray, reader.result])
+      }
+    };
+
+    reader.readAsDataURL(file);
+  });
+};
+
 
     const register = async (userData) => {
         try {
@@ -100,7 +108,7 @@ const Register = () => {
                                 className="form-control"
                                 name='name'
                                 value={name}
-                                onChange={onChange}
+                                onChange={(e) => setUser({ ...user, name: e.target.value })}
                             />
                         </div>
 
@@ -112,7 +120,7 @@ const Register = () => {
                                 className="form-control"
                                 name='email'
                                 value={email}
-                                onChange={onChange}
+                                onChange={(e) => setUser({ ...user, email: e.target.value })}
                             />
                         </div>
 
@@ -124,11 +132,11 @@ const Register = () => {
                                 className="form-control"
                                 name='password'
                                 value={password}
-                                onChange={onChange}
+                                onChange={(e) => setUser({ ...user, password: e.target.value })}
                             />
                         </div>
 
-                        <div className='form-group'>
+                        {/* <div className='form-group'>
                             <label htmlFor='avatar_upload'>Avatar</label>
                             <div className='d-flex align-items-center'>
                                 <div>
@@ -154,7 +162,26 @@ const Register = () => {
                                     </label>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
+
+                                    <div className="custom-file">
+                                        <input
+                                            type="file"
+                                            name="avatar"
+                                            className="custom-file-input"
+                                            id="customFile"
+                                            onChange={onChange}
+                                            multiple
+                                        />
+                                        <label className="custom-file-label" htmlFor="customFile">
+                                            Choose Images
+                                        </label>
+                                    </div>
+                                    {avatarPreview.map(img => (
+                                        <img src={img} key={img} alt="Images Preview" className="mt-3 mr-2" width="55" height="52" />
+                                    ))}
+
+                              
 
                         <button
                             id="register_button"
