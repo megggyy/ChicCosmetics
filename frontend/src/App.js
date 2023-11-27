@@ -230,20 +230,76 @@ function App() {
           <Route path="/success" element={<OrderSuccess />} />
           <Route path="/orders/me" element={<ListOrders />} />
           <Route path="/order/:id" element={<OrderDetails />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/admin/products" element={<ProductsList />} />
-          <Route path="/admin/product" element={<NewProduct />} />
-          <Route path="/admin/brand" element={<NewBrand />} />
-          <Route path="/admin/brands" element={<BrandsList />} />
-          <Route path="/admin/brand/:id" element={<UpdateBrand />} />
-          <Route path="/admin/category" element={<NewCategory />} />
-          <Route path="/admin/categories" element={<CategoriesList />} />
-          <Route path="/admin/category/:id" element={<UpdateCategory />} />
-          <Route path="/admin/product/:id" element={<UpdateProduct />} />
-          <Route path="/admin/users" element={<UsersList />} />
-          <Route path="/admin/orders" element={<OrdersList />} />
-          <Route path="/admin/order/:id" element={<ProcessOrder />} />
-          <Route path="/admin/user/:id" element={<UpdateUser />} />
+          <Route path="/dashboard" element={
+              <ProtectedRoute isAdmin={true}>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+          <Route path="/admin/products" element={
+              <ProtectedRoute isAdmin={true}>
+                <ProductsList />
+              </ProtectedRoute>
+            } />
+          <Route path="/admin/product" element={
+              <ProtectedRoute isAdmin={true}>
+                <NewProduct />
+              </ProtectedRoute>
+            } />
+          <Route path="/admin/brand" element={
+              <ProtectedRoute isAdmin={true}>
+                <NewBrand />
+              </ProtectedRoute>
+            } />
+          <Route path="/admin/brands" element={
+              <ProtectedRoute isAdmin={true}>
+                <BrandsList />
+              </ProtectedRoute>
+            }/>
+          <Route path="/admin/brand/:id" element={
+              <ProtectedRoute isAdmin={true}>
+                <UpdateBrand />
+              </ProtectedRoute>
+            } />
+          <Route path="/admin/category" element={
+              <ProtectedRoute isAdmin={true}>
+                <NewCategory />
+              </ProtectedRoute>
+            } />
+          <Route path="/admin/categories" element={
+              <ProtectedRoute isAdmin={true}>
+                <CategoriesList />
+              </ProtectedRoute>
+            } />
+          <Route path="/admin/category/:id" element={
+              <ProtectedRoute isAdmin={true}>
+                <UpdateCategory />
+              </ProtectedRoute>
+            } />
+          <Route path="/admin/product/:id" element={
+              <ProtectedRoute isAdmin={true}>
+                <UpdateProduct />
+              </ProtectedRoute>
+            } />
+          <Route path="/admin/users" element={
+              <ProtectedRoute isAdmin={true}>
+                <UsersList />
+              </ProtectedRoute>
+            } />
+          <Route path="/admin/orders" element={
+              <ProtectedRoute isAdmin={true}>
+                <OrdersList />
+              </ProtectedRoute>
+            } />
+          <Route path="/admin/order/:id" element={
+              <ProtectedRoute isAdmin={true}>
+                <ProcessOrder />
+              </ProtectedRoute>
+            }/>
+          <Route path="/admin/user/:id" element={
+              <ProtectedRoute isAdmin={true}>
+                <UpdateUser />
+              </ProtectedRoute>
+            } />
 
           <Route
             path="/admin/reviews"
