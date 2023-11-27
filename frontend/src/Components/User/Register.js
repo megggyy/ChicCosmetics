@@ -193,9 +193,11 @@ const Register = () => {
                         </button>
                     </form>
                 </div>
+                
             </div>
-
+       <br></br>  <br></br> <br></br>  <br></br>
         </Fragment>
+        
     )
 }
 
