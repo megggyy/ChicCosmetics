@@ -70,7 +70,7 @@ const Home = () => {
   ) => {
     let link = "";
 
-    link = `http://localhost:8001/api/v1/products/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
+    link = `${process.env.REACT_APP_API}/api/v1/products/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
 
     if (selectedCategory) {
       link += `&category=${selectedCategory}`;
