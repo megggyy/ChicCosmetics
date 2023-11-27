@@ -1,4 +1,5 @@
 
+import { Link } from "react-router-dom"
 function Topbar() {
   return (
     <div className="container-fluid">
@@ -41,7 +42,9 @@ function Topbar() {
                 <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div className="navbar-nav mr-auto py-0">
                         <a href="index.html" className="nav-item nav-link active">Home</a>
-                        <a href="shop.html" className="nav-item nav-link">Shop</a>
+                        <Link to="/shop" className="nav-item nav-link">
+                                Shop
+                            </Link>
                         <a href="detail.html" className="nav-item nav-link">Shop Detail</a>
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown" data-toggle="dropdown">Pages ↓</a>
