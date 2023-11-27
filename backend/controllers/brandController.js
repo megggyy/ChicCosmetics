@@ -156,3 +156,17 @@ exports.getBrandDetails = async (req, res, next) => {
     })
 
 }
+
+exports.getBrands = async (req, res, next) => {
+	const brands = await Brand.find();
+	if (!brands) {
+		return res.status(404).json({
+			success: false,
+			message: 'Brands not found'
+		})
+	}
+	res.status(200).json({
+		success: true,
+		brands
+	})
+}

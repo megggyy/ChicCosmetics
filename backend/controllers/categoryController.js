@@ -152,3 +152,17 @@ exports.getCategoryDetails = async (req, res, next) => {
     })
 
 }
+
+exports.getCategories = async (req, res, next) => {
+	const categories = await Category.find();
+	if (!categories) {
+		return res.status(404).json({
+			success: false,
+			message: 'Categories not found'
+		})
+	}
+	res.status(200).json({
+		success: true,
+		categories
+	})
+}

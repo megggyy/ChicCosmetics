@@ -56,7 +56,6 @@ import OrdersList from "./Components/Admin/OrdersList";
 import ProcessOrder from "./Components/Admin/ProcessOrder";
 
 import UserWishlist from "./Components/User/userWishlist.js";
-import Shop from "./Components/Shop.js";
 
 function App() {
   useEffect(() => {
@@ -149,7 +148,7 @@ function App() {
         {location.pathname === "/" && <Featured />}
         {location.pathname === "/" && <Categories />}
         {location.pathname === "/" && <Offer />}
-        {/* {location.pathname === "/" && <ProductSection />} */}
+        {location.pathname === "/" && <ProductSection />}
       </div>
     );
   }
@@ -252,7 +251,6 @@ function App() {
             }
           />
           <Route path="/wishlist" element={<UserWishlist />} />
-          <Route path="/shop" element={<Shop />} />
         </Routes>
       </Router>
       <Footer />
