@@ -29,7 +29,7 @@ const Shipping = ({ shipping, saveShippingInfo }) => {
                         className="shadow-lg"
                         onSubmit={submitHandler}
                     >
-                        <h1 className="mb-4">Shipping Info</h1>
+                        <h1>Shipping Information</h1>
                         <div className="form-group">
                             <label htmlFor="address_field">Address</label>
                             <input
@@ -107,7 +107,7 @@ const Shipping = ({ shipping, saveShippingInfo }) => {
                     </form>
                 </div>
             </div>
-
+            <br></br> <br></br> <br></br> <br></br> <br></br>
         </Fragment>
     )
 }

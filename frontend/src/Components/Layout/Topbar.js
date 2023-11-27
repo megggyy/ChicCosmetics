@@ -19,7 +19,9 @@ function Topbar() {
   const [price, setPrice] = useState([1, 1000]);
 
   const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
@@ -64,7 +66,7 @@ function Topbar() {
     setFilteredProductsCount(res.data.filteredProductsCount);
     setLoading(false);
   };
-
+ 
   useEffect(() => {
     getProducts(currentPage, keyword, price, selectedCategory);
     getCategory();
@@ -194,6 +196,7 @@ function Topbar() {
                               Contact
                             </a>
                           </div>
+                          
                         </div>
                       </nav>
 
@@ -285,14 +288,14 @@ function Topbar() {
 
                     <div className="col justify-content-center">
                       <div className="row mt-4 justify-content-center">
-                        {products.map((product) => (
-                          <Product
-                            key={product._id}
-                            product={product}
-                            col={3}
-                            style={{ alignItems: "center" }}
-                          />
-                        ))}
+                          {products.map((product) => (
+                            <Product
+                              key={product._id}
+                              product={product}
+                              col={3}
+                              style={{ alignItems: "center" }}
+                            />
+                          ))}
                       </div>
                       {resPerPage <= count && (
                         <div className="row mt-5 justify-content-center">
@@ -374,6 +377,7 @@ function Topbar() {
                             Contact
                           </a>
                         </div>
+                       
                       </div>
                     </nav>
 

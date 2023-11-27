@@ -30,7 +30,7 @@ const ConfirmOrder = ({cartItems, shippingInfo}) => {
             <CheckoutSteps shipping confirmOrder />
             <div className="row d-flex justify-content-between">
                 <div className="col-12 col-lg-8 mt-5 order-confirm">
-                    <h4 className="mb-3">Shipping Info</h4>
+                    <h4>Shipping Info</h4>
                     {user && <p><b>Name:</b> {user && user.name}</p>}
                     <p><b>Phone:</b> {shippingInfo.phoneNo}</p>
                     <p className="mb-4"><b>Address:</b> {`${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`}</p>
@@ -83,7 +83,7 @@ const ConfirmOrder = ({cartItems, shippingInfo}) => {
 
 
             </div>
-
+            <br></br> <br></br> <br></br> <br></br>
         </Fragment>
     )
 }
