@@ -88,7 +88,7 @@ body {
 }
 
 .card-title a:hover {
-  color: #fa9c23;
+  color: #b95d6e;
   text-decoration: none;
 }
 
@@ -101,7 +101,7 @@ body {
 }
 
 #view_btn {
-  background-color: #fa9c23;
+  background-color: #b95d6e;
   color: white;
 }
 
@@ -112,7 +112,7 @@ body {
 
 .ratings {
   font-size: 1.2rem;
-  color: #fdcc0d;
+  color: #b95d6e;
 }
 
 #no_of_reviews {
@@ -135,7 +135,7 @@ footer {
   display: inline-block;
   position: relative;
   font-family: FontAwesome;
-  color: #fdcc0d;
+  color: #b95d6e;
 }
 
 .rating-outer::before {
@@ -153,7 +153,7 @@ footer {
 
 .rating-inner::before {
   content: '\f005 \f005 \f005 \f005 \f005';
-  color: #f8ce0b;
+  color: rgb(255, 135, 159), 11, 90);
 }
 
 /* Product Details Page */
@@ -170,7 +170,7 @@ footer {
 #cart_btn,
 #review_btn {
   border-radius: 2rem;
-  background-color: #fa9c23;
+  background-color: #b95d6e;
   border: none;
   padding: 0.5rem 2rem;
 }
@@ -215,8 +215,8 @@ footer {
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid #fa9c23;
-  border-color: #fa9c23 transparent;
+  border: 6px solid #b95d6e;
+  border-color: #b95d6e transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 @keyframes lds-dual-ring {
@@ -248,22 +248,22 @@ footer {
 }
 
 #card_item_price {
-  color: #febd69;
+  color: #b95d6e;
   font-weight: bold;
   font-size: 1.4rem;
 }
 
 #checkout_btn,
 .review-btn {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: rgb(245, 168, 181);
+  border-color: #fa2363;
   margin-top: 2rem;
   border-radius: 5rem;
 }
 
 #view_order_details {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #b95d6e;
+  border-color: #b95d6e;
 }
 
 #order_summary {
@@ -315,8 +315,8 @@ footer {
 }
 
 .wrapper form .btn {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #b95d6e;
+  border-color: #b95d6e;
   color: white;
   margin-top: 2.5rem;
 }
@@ -395,7 +395,7 @@ footer {
 }
 
 .active-step {
-  background: #fa9c23;
+  background: #b95d6e;
   color: #fff;
 }
 
@@ -403,7 +403,7 @@ footer {
   float: left;
   width: 0;
   border-top: 20px solid transparent;
-  border-left: 15px solid #fa9c23;
+  border-left: 15px solid #b95d6e;
   border-bottom: 20px solid transparent;
   margin-left: -1px;
 }
@@ -411,9 +411,9 @@ footer {
 .triangle2-active {
   width: 0;
   float: left;
-  border-top: 20px solid #fa9c23;
+  border-top: 20px solid #b95d6e;
   border-left: 15px solid #fff;
-  border-bottom: 20px solid #fa9c23;
+  border-bottom: 20px solid #b95d6e;
   margin-right: -1px;
 }
 
@@ -453,8 +453,8 @@ footer {
 }
 
 #edit_profile {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #b95d6e;
+  border-color: #b95d6e;
 }
 
 /* Confirm Order */
@@ -465,8 +465,8 @@ footer {
 }
 
 .update-btn {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #fba4bd;
+  border-color: #b95d6e;
   color: white;
 }
 
