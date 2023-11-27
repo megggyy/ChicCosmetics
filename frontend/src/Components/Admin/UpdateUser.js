@@ -80,9 +80,9 @@ const UpdateUser = () => {
         <Fragment>
             <MetaData title={`Update User`} />
             <div className="row">
-                <div className="col-12 col-md-2">
+                    <div className="col-md-2 p-0">
                     <Sidebar />
-                </div>
+                    </div>
                 <div className="col-12 col-md-10">
                     <div className="row wrapper">
                         <div className="col-10 col-lg-5">
