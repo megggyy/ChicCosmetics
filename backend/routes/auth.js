@@ -24,8 +24,7 @@ const {
 
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
 
-//router.post("/register", upload.single("avatar"), registerUser);
-router.post('/register', upload, registerUser);
+router.post("/register", upload.single("avatar"), registerUser);
 router.post("/login", loginUser);
 router.get("/logout", logout);
 router.post("/password/forgot", forgotPassword);
