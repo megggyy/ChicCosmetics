@@ -89,6 +89,11 @@ const UsersList = () => {
                     sort: 'asc'
                 },
                 {
+                    label: 'Avatar',
+                    field: 'avatar',
+                    sort: 'asc',
+                },
+                {
                     label: 'Actions',
                     field: 'actions',
                 },
@@ -96,14 +101,18 @@ const UsersList = () => {
             rows: []
         }
         allUsers.forEach(user => {
+            const avatar = user.avatar.map((avatars) => (
+                <img key={avatars._id} src={avatars.url} alt="user image" className="mr-2" width="50" height="50" />
+              ));
             data.rows.push({
                 id: user._id,
                 name: user.name,
                 email: user.email,
                 role: user.role,
+                avatar: <div>{avatar}</div>,
                 actions: <Fragment>
                     <Link to={`/admin/user/${user._id}`} className="btn btn-primary py-1 px-2">
-                        <i className="fa fa-pencil"></i>
+                    <i className="fa fa-edit"></i>
                     </Link>
                     <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteUserHandler(user._id)}>
                         <i className="fa fa-trash"></i>
@@ -117,7 +126,7 @@ const UsersList = () => {
         <Fragment>
             <MetaData title={'All Users'} />
             <div className="row">
-                <div className="col-12 col-md-2">
+                <div className="col-md-2 p-0">
                     <Sidebar />
                 </div>
                 <div className="col-12 col-md-10">
