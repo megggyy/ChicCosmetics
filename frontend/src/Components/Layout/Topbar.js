@@ -42,44 +42,53 @@ function Topbar() {
                 <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div className="navbar-nav mr-auto py-0">
                         <a href="index.html" className="nav-item nav-link active">Home</a>
-                        <Link to="/shop" className="nav-item nav-link">
+                            <Link to="/shop" className="nav-item nav-link">
                                 Shop
                             </Link>
-                        <a href="detail.html" className="nav-item nav-link">Shop Detail</a>
-                        <div className="nav-item dropdown">
-                            <a href="#" className="nav-link dropdown" data-toggle="dropdown">Pages ↓</a>
-                            <div className="dropdown-menu rounded-0 m-0">
-                                <a href="cart.html" className="dropdown-item">Shopping Cart</a>
-                                <a href="checkout.html" className="dropdown-item">Checkout</a>
-                            </div>
-                        </div>
-                        <a href="contact.html" className="nav-item nav-link">Contact</a>
+                            <Link to="/wishlist" className="nav-item nav-link">
+                                Wishlist
+                            </Link>
+                            <Link to="/cart" className="nav-item nav-link">
+                                Cart
+                            </Link>
                     </div>
-                    {/* <div className="navbar-nav ml-auto py-0">
-                        <a href="" className="nav-item nav-link">Login</a>
-                        <a href="" className="nav-item nav-link">Register</a>
-                    </div> */}
                 </div>
             </nav>
             <div id="header-carousel" className="carousel slide" data-ride="carousel">
                 <div className="carousel-inner">
                     <div className="carousel-item active" style={{height: '410px'}}>
-                        <img className="img-fluid" src="userkit/img/carousel-1.jpg" alt="Image"/>
+                        <img className="img-fluid" src="userkit/img/maybellinebanner.jpg" alt="Image"/>
                         <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
                             <div className="p-3" style={{maxWidth: '700px'}}>
                                 <h4 className="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
                                 <h3 className="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
-                                <a href="" className="btn btn-light py-2 px-3">Shop Now</a>
+                                <Link to="/shop" className="btn btn-light py-2 px-3">
+                                Shop Now
+                                </Link>
                             </div>
                         </div>
                     </div>
                     <div className="carousel-item" style={{height: '410px'}}>
-                        <img className="img-fluid" src="userkit/img/carousel-2.jpg" alt="Image"/>
+                        <img className="img-fluid" src="userkit/img/nars.jpg" alt="Image"/>
                         <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
                             <div className="p-3" style={{maxWidth: '700px'}}>
                                 <h4 className="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
                                 <h3 className="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
-                                <a href="" className="btn btn-light py-2 px-3">Shop Now</a>
+                                <Link to="/shop" className="btn btn-light py-2 px-3">
+                                Shop Now
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="carousel-item" style={{height: '410px'}}>
+                        <img className="img-fluid" src="userkit/img/benefit.jpg" alt="Image"/>
+                        <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                            <div className="p-3" style={{maxWidth: '700px'}}>
+                                <h4 className="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
+                                <h3 className="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
+                                <Link to="/shop" className="btn btn-light py-2 px-3">
+                                Shop Now
+                                </Link>
                             </div>
                         </div>
                     </div>
