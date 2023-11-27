@@ -13,38 +13,62 @@ const client = new OAuth2(
 );
 
 exports.registerUser = async (req, res, next) => {
-  const result = await cloudinary.v2.uploader.upload(
-    req.body.avatar,
-    {
-      folder: "avatars",
-      width: 150,
-      crop: "scale",
-    },
-    (err, res) => {
-      console.log(err, res);
-    }
-  );
-  const { name, email, password, role } = req.body;
-  const user = await User.create({
-    name,
-    email,
-    password,
-    avatar: {
-      public_id: result.public_id,
-      url: result.secure_url,
-    },
-    // role,
-  });
-  //test token
-  //  const token = user.getJwtToken();
+  const { name, email, password, role, avatar } = req.body;
 
-  //   res.status(201).json({
-  //   	success:true,
-  //   	user,
-  //  	token
-  //   })
-  sendToken(user, 200, res);
+  let avatarLinks = [];
+
+  // If avatar is a string, convert it to an array
+  const avatarArray = typeof avatar === 'string' ? [avatar] : avatar;
+
+  for (let i = 0; i < avatarArray.length; i++) {
+    const avatarDataUri = avatarArray[i];
+    
+    try {
+      const result = await cloudinary.v2.uploader.upload(avatarDataUri, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+      });
+
+      avatarLinks.push({
+        public_id: result.public_id,
+        url: result.secure_url,
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error as needed
+    }
+  }
+
+  try {
+    // Create the user with the provided data and avatarLinks
+    const user = await User.create({
+      name,
+      email,
+      password,
+      avatar: avatarLinks,
+      // role,
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'User not created',
+      });
+    }
+
+    // Send the user token
+    sendToken(user, 200, res);
+  } catch (error) {
+    console.log(error);
+    // Handle the error as needed
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
 };
+
 
 exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;
