@@ -17,6 +17,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
   let location = useLocation();
   const redirect = location.search
     ? new URLSearchParams(location.search).get("redirect")
@@ -49,7 +50,26 @@ const Login = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    login(email, password);
+    if (validateForm()) {
+      login(email, password);
+  }
+  };
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (!email.trim()) {
+      errors.email = 'Email is required';
+    }
+
+    if (!password.trim()) {
+      errors.password = 'Password is required';
+    }
+
+    setErrors(errors);
+
+    // If there are no errors, return true; otherwise, return false
+    return Object.keys(errors).length === 0;
   };
 
   const resgoogle = async (response) => {
@@ -162,10 +182,11 @@ const Login = () => {
                   <input
                     type="email"
                     id="email_field"
-                    className="form-control"
+                    className={`form-control ${errors.email && 'is-invalid'}`}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
+                  {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                 </div>
 
                 <div className="form-group">
@@ -173,10 +194,11 @@ const Login = () => {
                   <input
                     type="password"
                     id="password_field"
-                    className="form-control"
+                    className={`form-control ${errors.password && 'is-invalid'}`}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                  {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                 </div>
 
                 <Link to="/password/forgot" className="float-right mb-4">
