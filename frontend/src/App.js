@@ -151,7 +151,7 @@ function App() {
         {location.pathname === "/" && <Featured />}
         {location.pathname === "/" && <Brands />}
         {location.pathname === "/" && <Offer />}
-        {location.pathname === "/" && <ProductSection />}
+        {/* {location.pathname === "/" && <ProductSection />} */}
       </div>
     );
   }
