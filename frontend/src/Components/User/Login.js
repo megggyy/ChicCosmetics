@@ -10,6 +10,8 @@ import { authenticate } from "../../utils/helpers";
 import { getUser } from "../../utils/helpers";
 import "./Login.css";
 
+import FacebookLogin from "react-facebook-login";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -85,6 +87,57 @@ const Login = () => {
       });
     }
   };
+
+  const responseFacebook = async (response) => {
+    try {
+      console.log(response)
+       
+      const {accessToken, userID} = response
+      const { data } = await axios.post('http://localhost:8001/api/v1/facebook_login', {accessToken, userID})
+      // const { data } = await axios.post(
+      //   `${process.env.REACT_APP_API}/api/v1/facebook_login`,
+      //   { accessToken, userID }
+      // );
+     
+ 
+      if (data && data.user) {
+        console.log("Received from server:", data.user);
+ 
+        sessionStorage.setItem("user", JSON.stringify(data.user));
+ 
+        // Retrieve the user data from session storage
+        const userJson = sessionStorage.getItem("user");
+       
+        if (userJson) {
+          const user = JSON.parse(userJson);
+          console.log("Stored in session storage:", user);
+       
+          authenticate(data, () => {
+            toast.success("Logged in successfully", {
+              position: "top-right",
+            });
+            navigate("/");
+            console.log("Retrieved from session storage:", user);
+            console.log(user.name, user.email, user.avatar);
+          });
+        } else {
+          console.error("No user data in session storage");
+        }
+      } else {
+        console.error("No user data in server response");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      if (err.response) {
+        console.error("Response Data:", err.response.data);
+      }
+      toast.error("Facebook Login Failed", {
+        position: "top-right",
+      });
+    }
+  }
+
+
 
   useEffect(() => {
     if (getUser() && redirect === "shipping") {
@@ -165,7 +218,17 @@ const Login = () => {
                   </button>
                 )}
               />
-
+           <div className="col-span-2 sm:col-span-3 ">
+               
+               <FacebookLogin
+                 appId="1559365501504920"
+                 autoLoad={false}
+                 fields="name,email,picture"
+                 callback={responseFacebook}
+                 cssClass="h-12 px-5  bg-blue-600 text-white rounded-lg hover:bg-blue-700 hover:shadow-xl cursor-pointer "
+                 icon="fa-facebook pr-2"
+               /> 
+                </div>
                 <Link to="/register" className="float-right mt-3">
                   New User?
                 </Link>

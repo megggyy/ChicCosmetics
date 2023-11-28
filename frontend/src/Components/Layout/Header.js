@@ -66,6 +66,7 @@ const Header = ({ cartItems }) => {
                             <figure className="avatar avatar-nav">
                             <img
                             src={user.avatar && user.avatar.length > 0 && user.avatar[0].url}
+                            // src={user.avatar && user.avatar.url}
                             alt={user && user.name}
                             className="rounded-circle"
                             />

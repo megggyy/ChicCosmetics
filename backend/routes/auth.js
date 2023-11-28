@@ -20,6 +20,7 @@ const {
   getWish,
   getUserWishlist,
   gLogin,
+  facebookLogin
 } = require("../controllers/authController");
 
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
@@ -51,5 +52,6 @@ router.delete("/deletewish/:id", isAuthenticatedUser, deleteWish);
 
 //glogin
 router.post("/g-log", gLogin);
+router.post('/facebook_login', facebookLogin)
 
 module.exports = router;

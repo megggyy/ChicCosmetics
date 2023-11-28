@@ -7,6 +7,8 @@ const { google } = require("googleapis");
 const bcrypt = require("bcrypt");
 const { OAuth2 } = google.auth;
 const Product = require("../models/product");
+const fetch = require('node-fetch');
+const jwt = require('jsonwebtoken');
 
 const client = new OAuth2(
   "487035883817-4qg72avlq84pfgrjjmhiigjcb832qgom.apps.googleusercontent.com"
@@ -104,6 +106,7 @@ exports.logout = async (req, res, next) => {
     message: "Logged out",
   });
 };
+
 
 exports.forgotPassword = async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
@@ -449,5 +452,69 @@ exports.gLogin = async (req, res) => {
       console.error("Response status:", err.response.status);
     }
     return res.status(500).json({ msg: err.message });
+  }
+};
+
+const createRefreshToken = (payload) => {
+  if (!process.env.JWT_SECRET) {
+      throw new Error('REFRESH_TOKEN_SECRET is not defined');
+  }
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
+}
+
+
+exports.facebookLogin = async (req, res) => {
+  try {
+      const { accessToken, userID } = req.body;
+      const URL = `https://graph.facebook.com/v2.9/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`;
+      const response = await fetch(URL);
+
+
+      if (!response.ok) {
+          throw new Error(`Failed to fetch data from Facebook: ${response.statusText}`);
+      }
+
+
+      const data = await response.json();
+      const { email, name, picture } = data;
+      let user = await User.findOne({ email });
+
+
+      if (user) {
+          const refresh_token = createRefreshToken({ id: user._id });
+          res.cookie('refreshtoken', refresh_token, {
+            httpOnly: true,
+            path: '/user/refresh_token',
+            maxAge: 7 * 24 * 60 * 60 * 1000
+          });
+      } else {
+          const passwordHash = await bcrypt.hash(email, 12);
+          const newUser = new User({
+              name,
+              email,
+              password: passwordHash,
+              avatar: {
+                  public_id: 'default',
+                  url: picture.data.url
+              }
+          });
+
+
+          await newUser.save();
+          user = newUser;
+
+
+          const refresh_token = createRefreshToken({ id: newUser._id });
+          res.cookie('refreshtoken', refresh_token, {
+              httpOnly: true,
+              path: '/user/refresh_token',
+              maxAge: 7 * 24 * 60 * 60 * 1000
+          });
+      }
+
+
+      sendToken(user, 200, res);
+  } catch (err) {
+      return res.status(500).json({ msg: err.message });
   }
 };
