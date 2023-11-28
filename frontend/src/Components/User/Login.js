@@ -243,7 +243,7 @@ const Login = () => {
            <div className="col-span-2 sm:col-span-3 ">
                
                <FacebookLogin
-                 appId="1559365501504920"
+                 appId="673412307932267"
                  autoLoad={false}
                  fields="name,email,picture"
                  callback={responseFacebook}
