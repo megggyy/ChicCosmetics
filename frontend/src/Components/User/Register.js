@@ -19,6 +19,7 @@ const Register = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(true)
+    const [errors, setErrors] = useState({});
    
 
     let navigate = useNavigate()
@@ -36,19 +37,21 @@ const Register = () => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.set('name', name);
-        formData.set('email', email);
-        formData.set('password', password);
-
-        avatar.forEach(avatars => {
-          formData.append("avatar", avatars);
-        });
-        // formData.set('avatar', avatar);
-
-        register(formData)
+        if (validateForm()) {
+            const formData = new FormData();
+            formData.set('name', user.name);
+            formData.set('email', user.email);
+            formData.set('password', user.password);
+      
+            avatar.forEach(avatars => {
+              formData.append("avatar", avatars);
+            });
+      
+            register(formData);
+          }
     }
 
+    
   const onChange = e => {
   const files = Array.from(e.target.files)
   setAvatarPreview([]);
@@ -65,6 +68,28 @@ const Register = () => {
     reader.readAsDataURL(file);
   });
 };
+
+const validateForm = () => {
+    const errors = {};
+
+    if (!user.name.trim()) {
+      errors.name = 'Name is required';
+    }
+
+    if (!user.email.trim()) {
+      errors.email = 'Email is required';
+    }
+
+    if (!user.password.trim()) {
+      errors.password = 'Password is required';
+    }
+
+    setErrors(errors);
+
+    // If there are no errors, return true; otherwise, return false
+    return Object.keys(errors).length === 0;
+  };
+
 
 
     const register = async (userData) => {
@@ -105,11 +130,12 @@ const Register = () => {
                             <input
                                 type="name"
                                 id="name_field"
-                                className="form-control"
+                                className={`form-control ${errors.name && 'is-invalid'}`}
                                 name='name'
                                 value={name}
                                 onChange={(e) => setUser({ ...user, name: e.target.value })}
                             />
+                             {errors.name && <div className="invalid-feedback">{errors.name}</div>}
                         </div>
 
                         <div className="form-group">
@@ -117,11 +143,12 @@ const Register = () => {
                             <input
                                 type="email"
                                 id="email_field"
-                                className="form-control"
+                                className={`form-control ${errors.email && 'is-invalid'}`}
                                 name='email'
                                 value={email}
                                 onChange={(e) => setUser({ ...user, email: e.target.value })}
                             />
+                            {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                         </div>
 
                         <div className="form-group">
@@ -129,11 +156,12 @@ const Register = () => {
                             <input
                                 type="password"
                                 id="password_field"
-                                className="form-control"
+                                className={`form-control ${errors.password && 'is-invalid'}`}
                                 name='password'
                                 value={password}
                                 onChange={(e) => setUser({ ...user, password: e.target.value })}
                             />
+                             {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                         </div>
 
                         {/* <div className='form-group'>
