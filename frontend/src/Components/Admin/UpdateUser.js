@@ -18,6 +18,7 @@ const UpdateUser = () => {
     const [error, setError] = useState('')
     const [user, setUser] = useState(true)
     const [isUpdated, setIsUpdated] = useState(false)
+    const [errors, setErrors] = useState({});
     let navigate = useNavigate();
 
     const { id } = useParams();
@@ -71,33 +72,32 @@ const UpdateUser = () => {
     }, [error, isUpdated, id, user])
     const submitHandler = (e) => {
         e.preventDefault();
+        if (validateForm()) {
         const formData = new FormData();
         formData.set('name', name);
         formData.set('email', email);
         formData.set('role', role);
-        updateUser(user._id, formData)
+        updateUser(user._id, formData)}
     }
 
-    const validationSchema = Yup.object({
-        name: Yup.string().required('Name is required'),
-        email: Yup.string().required('Email is required'),
+    const validateForm = () => {
+        const errors = {};
     
-    });
-    const formik = useFormik({
-        initialValues: {
-          name: "user.name" || "",
-          email: "user.email" || ""
-          },
-        validationSchema,
-        onSubmit: (values) => {
-          try {
-            submitHandler(values);
-            console.log("Submitting review with values:", values);
-          } catch (error) {
-            console.error("Error submitting review:", error);
-          }
-        },
-      });
+        if (!name.trim()) {
+          errors.name = 'name is required';
+        }
+    
+        if (!email.trim()) {
+          errors.email = 'Email is required';
+        }
+        
+        setErrors(errors);
+    
+        // If there are no errors, return true; otherwise, return false
+        return Object.keys(errors).length === 0;
+      };
+
+    
 
     return (
         <Fragment>
@@ -116,29 +116,25 @@ const UpdateUser = () => {
                                     <input
                                         type="name"
                                         id="name_field"
-                                        className={`form-control ${formik.touched.name && formik.errors.name ? 'is-invalid' : ''}`}
+                                        className={`form-control ${errors.name && 'is-invalid'}`}
                                         name='name'
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                     />
-                                    {formik.touched.name && formik.errors.name && (
-                                    <div className="invalid-feedback">{formik.errors.name}</div>
-                                     )}
+                                     {errors.name && <div className="invalid-feedback">{errors.name}</div>}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email_field">Email</label>
                                     <input
                                         type="email"
                                         id="email_field"
-                                        className={`form-control ${formik.touched.price && formik.errors.price ? 'is-invalid' : ''}`}
+                                        className={`form-control ${errors.email && 'is-invalid'}`}
                                         name='email'
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
 
                                     />
-                                    {formik.touched.email && formik.errors.email && (
-                                        <div className="invalid-feedback">{formik.errors.email}</div>
-                                        )}
+                                    {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="role_field">Role</label>
